@@ -16,29 +16,29 @@ import {
 
 const Dashboard = () => {
   const { orders, bills } = useOrder();
-  const { employees, payments } = useEmployee();
+  const { employees, salaryPayments } = useEmployee();
 
-  // Calculate statistics
-  const totalOrders = orders.length;
-  const pendingOrders = orders.filter(o => o.status === 'pending').length;
-  const completedOrders = orders.filter(o => o.status === 'completed').length;
-  const totalRevenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
-  const totalSalaryExpense = payments.reduce((sum, payment) => sum + payment.amount, 0);
+  // Calculate statistics with proper null checks
+  const totalOrders = orders?.length || 0;
+  const pendingOrders = orders?.filter(o => o.status === 'pending')?.length || 0;
+  const completedOrders = orders?.filter(o => o.status === 'completed')?.length || 0;
+  const totalRevenue = orders?.reduce((sum, order) => sum + (order.totalAmount || 0), 0) || 0;
+  const totalSalaryExpense = salaryPayments?.reduce((sum, payment) => sum + (payment.amount || 0), 0) || 0;
   const netProfit = totalRevenue - totalSalaryExpense;
 
-  const activeEmployees = employees.filter(emp => emp.status === 'active').length;
+  const activeEmployees = employees?.filter(emp => emp.status === 'active')?.length || 0;
   const totalMenuItems = 0; // No menu items data available in the new_code
   const availableMenuItems = 0; // No menu items data available in the new_code
 
-  // Recent orders
+  // Recent orders with null check
   const recentOrders = orders
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    .slice(0, 5);
+    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    ?.slice(0, 5) || [];
 
-  // Recent bills
+  // Recent bills with null check
   const recentBills = bills
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    .slice(0, 5);
+    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    ?.slice(0, 5) || [];
 
   const stats = [
     {
