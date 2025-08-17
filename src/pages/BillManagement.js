@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useOrder } from '../context/OrderContext';
 import { format } from 'date-fns';
-import { Plus, Edit, Trash2, Receipt, DollarSign } from 'lucide-react';
+import { Plus, Edit, Trash2 } from 'lucide-react';
 
 const BillManagement = () => {
   const { bills, orders, addBill, updateBill, deleteBill } = useOrder();
@@ -10,13 +10,13 @@ const BillManagement = () => {
   const [formData, setFormData] = useState({
     orderId: '',
     customerName: '',
-    items: [],
+    customerPhone: '',
     subtotal: 0,
     tax: 0,
     discount: 0,
     totalAmount: 0,
     paymentMethod: 'cash',
-    notes: ''
+    status: 'pending'
   });
 
   const handleSubmit = (e) => {
@@ -31,13 +31,13 @@ const BillManagement = () => {
     setFormData({
       orderId: '',
       customerName: '',
-      items: [],
+      customerPhone: '',
       subtotal: 0,
       tax: 0,
       discount: 0,
       totalAmount: 0,
       paymentMethod: 'cash',
-      notes: ''
+      status: 'pending'
     });
   };
 
@@ -46,13 +46,13 @@ const BillManagement = () => {
     setFormData({
       orderId: bill.orderId || '',
       customerName: bill.customerName || '',
-      items: bill.items || [],
+      customerPhone: bill.customerPhone || '',
       subtotal: bill.subtotal || 0,
       tax: bill.tax || 0,
       discount: bill.discount || 0,
       totalAmount: bill.totalAmount || 0,
       paymentMethod: bill.paymentMethod || 'cash',
-      notes: bill.notes || ''
+      status: bill.status || 'pending'
     });
     setShowModal(true);
   };
@@ -84,15 +84,11 @@ const BillManagement = () => {
         ...formData,
         orderId: orderId,
         customerName: order.customerName || '',
-        items: order.items || [],
+        customerPhone: order.customerPhone || '',
         subtotal: order.totalAmount || 0,
         totalAmount: calculateTotal()
       });
     }
-  };
-
-  const getOrderById = (orderId) => {
-    return orders.find(o => o.id === parseInt(orderId));
   };
 
   return (

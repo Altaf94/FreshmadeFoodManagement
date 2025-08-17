@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { 
   Home, 
   ShoppingCart, 
@@ -10,7 +10,6 @@ import {
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
-  const location = useLocation();
 
   const navItems = [
     { path: '/', label: 'Dashboard', icon: Home },

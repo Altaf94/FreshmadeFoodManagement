@@ -5,12 +5,10 @@ import {
   Plus, 
   Edit, 
   Trash2, 
-  Eye, 
   Printer, 
   ShoppingCart,
   Clock,
   CheckCircle,
-  XCircle,
   User,
   Phone,
   Package,
@@ -18,8 +16,7 @@ import {
   Calendar,
   Search,
   Filter,
-  Grid,
-  List
+  Grid
 } from 'lucide-react';
 import PrintableOrder from '../components/PrintableOrder';
 import MenuItemCard from '../components/MenuItemCard';
@@ -193,17 +190,6 @@ const OrderManagement = () => {
   const completedOrders = orders.filter(o => o.status === 'completed').length;
   const totalRevenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'pending': return <Clock size={16} />;
-      case 'preparing': return <Package size={16} />;
-      case 'ready': return <CheckCircle size={16} />;
-      case 'completed': return <CheckCircle size={16} />;
-      case 'cancelled': return <XCircle size={16} />;
-      default: return <Clock size={16} />;
-    }
-  };
-
   const getStatusColor = (status) => {
     switch (status) {
       case 'pending': return '#d69e2e';
@@ -213,16 +199,6 @@ const OrderManagement = () => {
       case 'cancelled': return '#e53e3e';
       default: return '#d69e2e';
     }
-  };
-
-  const getMenuItemName = (menuItemId) => {
-    const item = menuItems.find(m => m.id === parseInt(menuItemId));
-    return item ? item.name : 'Unknown Item';
-  };
-
-  const getMenuItemPrice = (menuItemId) => {
-    const item = menuItems.find(m => m.id === parseInt(menuItemId));
-    return item ? item.price : 0;
   };
 
   return (

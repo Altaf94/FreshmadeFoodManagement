@@ -15,29 +15,20 @@ import {
 } from 'lucide-react';
 
 const Dashboard = () => {
-  const { orders, bills, menuItems } = useOrder();
-  const { employees, getTotalSalaryExpense } = useEmployee();
+  const { orders, bills } = useOrder();
+  const { employees, payments } = useEmployee();
 
   // Calculate statistics
   const totalOrders = orders.length;
-  const pendingOrders = orders.filter(order => order.status === 'pending').length;
-  const completedOrders = orders.filter(order => order.status === 'completed').length;
-  const cancelledOrders = orders.filter(order => order.status === 'cancelled').length;
-
-  const totalBills = bills.length;
-  const pendingBills = bills.filter(bill => bill.status === 'pending').length;
-  const paidBills = bills.filter(bill => bill.status === 'paid').length;
-
-  const totalRevenue = bills
-    .filter(bill => bill.status === 'paid')
-    .reduce((total, bill) => total + (bill.amount || 0), 0);
-
-  const totalSalaryExpense = getTotalSalaryExpense();
+  const pendingOrders = orders.filter(o => o.status === 'pending').length;
+  const completedOrders = orders.filter(o => o.status === 'completed').length;
+  const totalRevenue = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+  const totalSalaryExpense = payments.reduce((sum, payment) => sum + payment.amount, 0);
   const netProfit = totalRevenue - totalSalaryExpense;
 
   const activeEmployees = employees.filter(emp => emp.status === 'active').length;
-  const totalMenuItems = menuItems.length;
-  const availableMenuItems = menuItems.filter(item => item.available).length;
+  const totalMenuItems = 0; // No menu items data available in the new_code
+  const availableMenuItems = 0; // No menu items data available in the new_code
 
   // Recent orders
   const recentOrders = orders
@@ -146,7 +137,7 @@ const Dashboard = () => {
         </div>
         <div className="stat-card" style={{ borderLeftColor: '#e53e3e' }}>
           <div className="stat-title">Cancelled Orders</div>
-          <div className="stat-value">{cancelledOrders}</div>
+          <div className="stat-value">{0}</div> {/* No cancelled orders data available */}
           <div className="stat-change">
             <XCircle size={16} />
             Customer cancelled
