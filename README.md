@@ -1,4 +1,4 @@
-# Restaurant Management App 🍽️
+# Restaurant Management 🍽️
 
 A complete restaurant management system to handle **orders, receipts, payments, and billing** seamlessly.  
 Built to simplify restaurant operations and improve customer experience.  
